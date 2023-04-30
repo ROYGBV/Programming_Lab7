@@ -1,21 +1,21 @@
-class device(object):
-    def __init__(self, wattage, voltage):
+class device(object):   #родительский класс
+    def __init__(self, wattage, voltage):   #потребляемая мощность прибора и требуемое напряжение сети(120 В/240 В)
         self.wattage = wattage
         self.voltage = voltage
 
-    def parameters(self):
-        return("The device consumes {} Watt".format(self.wattage)
+    def parameters(self):   #вывод мощности прибора и напряжения сети
+        return("The device consumes up to {} Watt".format(self.wattage)
                + '\n' + "The device requires a {} Volt socket".format(self.voltage) + "\n")
 
-class kettle(device):
+class kettle(device):   #дочерний класс чайника, наследует wattage, voltage, функцию parameters
     def __init__(self, wattage, voltage):
         super().__init__(wattage, voltage)
 
-    def turn_on(self):
+    def turn_on(self):  #данная функция получает доступ к приватным функциям с двумя нижними подчёркиваниями(инкапсуляция)
         print("The button has been pushed")
         print(self.__boil(), self.__check_temp(), self.__beep(), self.__turn_off(), '', sep="\n")
 
-    def __boil(self):
+    def __boil(self):   #эту и последующие функции с двумя нижними подчёркиваниями крайне не рекомендуется запускать, дабы не поломать программу(инкапсуляция)
         return("Warming up the water")
 
     def __check_temp(self):
@@ -27,7 +27,7 @@ class kettle(device):
     def __turn_off(self):
         return("Automatic shutdown")
 
-class microwave(device):
+class microwave(device):    #дочерний класс микроволновки
     def __init__(self, wattage, voltage):
         super().__init__(wattage, voltage)
 
@@ -55,6 +55,8 @@ class microwave(device):
 
     def __turn_off(self):
         return("Automatic shutdown")
+
+#для классов чайника и микроволновки можно использовать функции turn_on и parameters(полиморфизм)
 
 print("--Microvave--")
 m = microwave(700, 240)
